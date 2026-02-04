@@ -1,12 +1,25 @@
-export default function Status({ currentPlayer, winner, isDraw }) {
+export default function Status({ currentPlayer, winner, isDraw, mode }) {
+  const getWinnerText = () => {
+    if (mode === "cpu") {
+      if (winner === "X") return "🎉 Vous avez gagné !";
+      if (winner === "O") return "💻 L’ordinateur a gagné !";
+    }
+
+    return `🎉 ${winner} a gagné !`;
+  };
+
   return (
-    <p className="text-xl">
+    <p className="text-xl font-semibold">
       {winner
-        ? <>🎉 <span className="font-bold">{winner}</span> a gagné !</>
+        ? getWinnerText()
         : isDraw
         ? "🤝 Match nul !"
-        : <>Tour de <span className="font-bold">{currentPlayer}</span></>
-      }
+        : (
+          mode==="pvp"&& <div className="mt-6">
+            Tour de <span className="font-bold mt-6">{currentPlayer}</span>
+          </div>
+        )}
     </p>
-  )
+  );
 }
+
